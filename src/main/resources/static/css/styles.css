@@ -1,0 +1,41 @@
+#account-button-open, a.collection-item {
+	cursor: pointer;
+	z-index: 999;
+}
+
+#account-button-open {
+	transition: 0.25s;
+	border-radius: 50%;
+	color: #5c6bc0;
+	border: 2px solid #5c6bc0;
+}
+
+#account-button-open:hover {
+	transition: 0.25s;
+	color: white;
+	background: #5c6bc0;
+}
+
+#login-logout-button {
+	transition: 0.25s;
+	background: #5c6bc0;
+	color: white;
+	border: 2px solid #5c6bc0;
+	font-weight: bold;
+}
+
+#login-logout-button:hover {
+	transition: 0.25s;
+	background: white;
+	color: #5c6bc0;
+	cursor: pointer;
+}
+
+#login-form {
+	margin-top: 10%;
+	padding: 0 15em 0 15em;
+}
+
+.input-field input[type=text]:focus, input[type=password]:focus {
+	border-bottom: 3px solid #5c6bc0 !important;
+}

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments :: head_config"></head>
+<body>
+	<div th:replace="fragments :: navbar"></div>
+	<div th:replace="fragments :: profile"></div>
+	<div class="container">
+		The content is here
+	</div>
+	<div th:replace="fragments :: js_declaration"></div>
+</body>
+</html>
