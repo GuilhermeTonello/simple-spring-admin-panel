@@ -22,10 +22,10 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.authorizeRequests()
-				.antMatchers("/js/*", "/css/*", "/signin", "/login").permitAll()
-				.antMatchers("/register/**", "/delete/**").hasRole("ADMIN")
-				.antMatchers("/edit/**").hasAnyRole("ADMIN", "EMPLOYEE")
-				.antMatchers("/list/**").hasAnyRole("ADMIN", "EMPLOYEE", "TRAINEE")
+				.antMatchers("/js/*", "/css/*", "/login").permitAll()
+				.antMatchers("/*/create/**", "/*/delete/**", "/employees/**").hasRole("ADMIN")
+				.antMatchers("/*/edit/**").hasAnyRole("ADMIN", "EMPLOYEE")
+				.antMatchers("/*/list/**", "/*/home/**", "/*/{id:[\\d+]}").hasAnyRole("ADMIN", "EMPLOYEE", "TRAINEE")
 			.anyRequest()
 				.authenticated()
 			.and()
