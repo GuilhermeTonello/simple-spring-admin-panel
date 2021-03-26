@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments :: head_config(title='Category Index')"></head>
+<body>
+	<div th:replace="fragments :: navbar"></div>
+	<div th:replace="fragments :: profile"></div>
+	<div th:replace="fragments :: object_home_options(object='category')"></div>
+	<th:block th:replace="fragments :: js_declaration"></th:block>
+</body>
+</html>
