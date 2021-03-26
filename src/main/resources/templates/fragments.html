@@ -3,7 +3,7 @@
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:fragment="head_config">
 	<meta charset="UTF-8" />
-	<title>Spring Admin Panel</title>
+	<title th:text="|${title} - Spring Admin Panel|"></title>
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 	<link th:href="@{~/css/materialize.min.css}" rel="stylesheet" />
 	<link th:href="@{~/css/styles.css}" rel="stylesheet" />
@@ -15,11 +15,11 @@
 			<a id="menu-button-field" class="collection-item center-align" title="Click to expand menu">
 				<i id="menu-button" class="small material-icons indigo-text lighten-1-text">menu</i>
 			</a>
-			<a class="collection-item" title="Home">
+			<a class="collection-item" title="Home" th:href="@{/}">
 				<i class="small material-icons indigo-text lighten-1-text">home</i>
 				<span class="indigo-text lighten-1-text hide navbar-expandable-text">Home</span>
 			</a>
-			<a class="collection-item" title="Categories page">
+			<a class="collection-item" title="Categories page" th:href="@{/category/home}">
 				<i class="small material-icons indigo-text lighten-1-text">widgets</i>
 				<span class="indigo-text lighten-1-text hide navbar-expandable-text">Categories</span>
 			</a>
@@ -45,10 +45,42 @@
 		</div>
 
 	</div>
+	
+	<div th:fragment="object_home_options" class="container top-distance">
+		<div class="row">
+			<div class="col s6">
+				<a th:href="@{|/${object}/list|}">
+					<div class="card white hoverable">
+						<div class="card-content indigo-text darken-1-text">
+							<span class="card-title">List [[${object}]]</span>
+							<p>Click on this card to generate a full list of [[${object}]]</p>
+						</div>
+						<div class="card-action">
+							<button class="btn object-home-page-button">GO</button>
+						</div>
+					</div>
+				</a>
+			</div>
+			
+			<div class="col s6">
+				<a th:href="@{|/${object}/create|}">
+					<div class="card white hoverable">
+						<div class="card-content indigo-text darken-1-text">
+							<span class="card-title bold">Create new [[${object}]]</span>
+							<p>Click on this card if you want to create a new [[${object}]]</p>
+						</div>
+						<div class="card-action">
+							<button class="btn object-home-page-button">GO</button>
+						</div>
+					</div>
+				</a>
+			</div>
+		</div>
+	</div>
 
-	<div th:fragment="js_declaration">
+	<th:block th:fragment="js_declaration">
 		<script th:src="@{~/js/materialize.min.js}" type="text/javascript"></script>
 		<script th:src="@{~/js/scripts.js}" type="text/javascript"></script>
-	</div>
+	</th:block>
 </body>
 </html>
