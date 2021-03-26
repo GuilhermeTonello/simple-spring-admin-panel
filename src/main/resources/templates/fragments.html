@@ -63,7 +63,7 @@
 			</div>
 			
 			<div class="col s6">
-				<a th:href="@{|/${object}/create|}">
+				<a th:href="@{|/${object}/save|}">
 					<div class="card white hoverable">
 						<div class="card-content indigo-text darken-1-text">
 							<span class="card-title bold">Create new [[${object}]]</span>
@@ -76,6 +76,30 @@
 				</a>
 			</div>
 		</div>
+	</div>
+	
+	<div th:fragment="errors_list">
+   		<ul class="collection" th:if="${field_errors != null}">
+   			<li class="collection-item red-text darken-2-text" th:each="field_error : ${field_errors}">
+   				<i class="material-icons">error_outline</i> [[${field_error.getDefaultMessage()}]]
+   			</li>
+   		</ul>
+	</div>
+	
+	<div th:fragment="object_not_found">
+   		<ul class="collection" th:if="${object_is_not_present}">
+   			<li class="collection-item red-text darken-2-text">
+   				<i class="material-icons">error_outline</i> [[${object.substring(0, 1).toUpperCase().concat(object.substring(1))}]] not found
+   			</li>
+   		</ul>
+	</div>
+	
+	<div th:fragment="action_success">
+   		<ul class="collection" th:if="${success_message != null}">
+   			<li class="collection-item green-text darken-2-text">
+   				<i class="material-icons">check</i> [[${success_message}]]
+   			</li>
+   		</ul>
 	</div>
 
 	<th:block th:fragment="js_declaration">
