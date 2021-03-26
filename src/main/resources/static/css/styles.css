@@ -55,5 +55,20 @@
 }
 
 .top-distance {
-	padding-top: 15%;
+	padding-top: 3%;
+}
+
+.submit-button {
+	transition: 0.25s;
+	background: #3949ab;
+	color: white;
+	font-weight: bold;
+	border-radius: 10px;
+	border-bottom: 3px solid #3949ab;
+}
+
+.submit-button:hover {
+	transition: 0.25s;
+	color: #3949ab;
+	background: white;
 }
