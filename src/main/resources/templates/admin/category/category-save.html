@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments :: head_config(title='Category Form')"></head>
+<body>
+	<div th:replace="fragments :: navbar"></div>
+	<div th:replace="fragments :: profile"></div>
+	<div class="container top-distance">
+		<h2>Category form</h2>
+		<br />
+		<div th:replace="fragments :: errors_list"></div>
+		<br />
+		<form method="POST" th:action="@{/category/save}" th:object="${category}">
+			<input type="hidden" th:field="*{id}" />
+			<div class="input-field">
+				<label for="name">Category name</label>
+				<input type="text" th:field="*{name}" />
+			</div>
+			<button type="submit" class="btn large submit-button">
+				Save category
+				<i class="material-icons right">send</i>
+			</button>
+		</form>
+	</div>
+	<th:block th:replace="fragments :: js_declaration"></th:block>
+</body>
+</html>
