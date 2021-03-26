@@ -39,3 +39,21 @@
 .input-field input[type=text]:focus, input[type=password]:focus {
 	border-bottom: 3px solid #5c6bc0 !important;
 }
+
+.object-home-page-button {
+	transition: 0.25s;
+	background: white;
+	color: #3949ab;
+	font-weight: bold;
+	border: 2px solid #3949ab;
+}
+
+.object-home-page-button:hover {
+	transition: 0.25s;
+	background: #3949ab;;
+	color: white;
+}
+
+.top-distance {
+	padding-top: 15%;
+}
