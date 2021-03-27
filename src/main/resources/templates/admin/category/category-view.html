@@ -8,6 +8,7 @@
 	<div class="container top-distance">
 		<h2>Viewing category: [[${category.getName()}]]</h2>
 		<br />
+		<div th:replace="fragments :: edit_button_view_page(object_type='category', object_id=${category.getId()})"></div>
 		<h3>About [[${category.getName()}]]:</h3>
 		<ul class="collection">
 			<li class="collection-item">ID: [[${category.getId()}]]</li>
