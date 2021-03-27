@@ -10,6 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Product {
@@ -19,18 +24,31 @@ public class Product {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_product_id")
 	private Long id;
 	
+	@NotBlank(message = "Product name is empty")
+	@NotNull
+	@Size(max = 255, message = "Product name must be between 1 and 255 characters")
 	private String name;
 	
+	@NotBlank(message = "Product description is empty")
+	@NotNull
+	@Size(max = 255, message = "Product description must be between 1 and 255 characters")
 	private String description;
 	
+	@NotNull(message = "Product price is empty")
+	@Max(value = 999999999, message = "Product price too high")
+	@Min(value = 0, message = "Product price too low")
 	private BigDecimal price;
 	
+	@NotNull(message = "Product quantity is empty")
+	@Max(value = 999999999, message = "Product quantity too high")
+	@Min(value = 0, message = "Product quantity too low")
 	private Integer quantity;
 	
 	@ManyToOne
 	@JoinColumn(
 			foreignKey = @ForeignKey(name = "fk_category_id")
 	)
+	@NotNull(message = "Product category is empty")
 	private Category category;
 
 	public Long getId() {

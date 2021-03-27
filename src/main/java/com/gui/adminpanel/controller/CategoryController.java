@@ -73,8 +73,6 @@ public class CategoryController {
 		Optional<Category> optionalCategory = categoryRepository.findCategoryByName(category.getName());
 		if (optionalCategory.isPresent()) {
 			result.addError(new ObjectError("category", "Category " + category.getName() + " already exists"));
-			return categoryCreatePage()
-					.addObject("field_errors", result.getAllErrors());
 		}
 		if (result.hasErrors()) {
 			return categoryCreatePage()
@@ -93,10 +91,8 @@ public class CategoryController {
 					.addObject("object_is_not_present", true);
 		}
 		Optional<Category> optionalCategoryByName = categoryRepository.findCategoryByName(category.getName());
-		if (optionalCategoryByName.isPresent() && id != optionalCategoryById.get().getId()) {
+		if (optionalCategoryByName.isPresent() && id != optionalCategoryByName.get().getId()) {
 			result.addError(new ObjectError("category", "Category " + category.getName() + " already exists"));
-			return categoryEditPage(category.getId())
-					.addObject("field_errors", result.getAllErrors());
 		}
 		if (result.hasErrors()) {
 			return categoryEditPage(category.getId())
