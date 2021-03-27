@@ -23,7 +23,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
 		http
 			.authorizeRequests()
 				.antMatchers("/js/*", "/css/*", "/login").permitAll()
-				.antMatchers("/*/create/**", "/*/delete/**", "/employees/**").hasRole("ADMIN")
+				.antMatchers("/*/create/**", "/*/delete/**", "/users/**").hasRole("ADMIN")
 				.antMatchers("/*/edit/**").hasAnyRole("ADMIN", "EMPLOYEE")
 				.antMatchers("/*/list/**", "/*/home/**", "/*/{id:[\\d+]}").hasAnyRole("ADMIN", "EMPLOYEE", "TRAINEE")
 			.anyRequest()
