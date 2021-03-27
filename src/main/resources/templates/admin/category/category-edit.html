@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:replace="fragments :: head_config(title='Category Form')"></head>
+<head th:replace="fragments :: head_config(title='Category Edition')"></head>
 <body>
 	<div th:replace="fragments :: navbar"></div>
 	<div th:replace="fragments :: profile"></div>
 	<div class="container top-distance">
-		<h2>Category form</h2>
+		<h2>Editing now: [[${category.getName()}]]</h2>
 		<br />
 		<div th:replace="fragments :: errors_list"></div>
 		<br />
-		<form method="POST" th:action="@{/category/save}" th:object="${category}">
+		<form method="POST" th:action="@{/category/edit/{id}(id=${category.getId()})}" th:object="${category}">
 			<input type="hidden" th:field="*{id}" />
 			<div class="input-field">
 				<label for="name">Category name</label>
