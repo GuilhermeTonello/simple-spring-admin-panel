@@ -36,7 +36,10 @@
 	padding: 0 15em 0 15em;
 }
 
-.input-field input[type=text]:focus, input[type=password]:focus {
+.input-field input[type=text]:focus,
+			input[type=password]:focus,
+			input[type=number]:focus,
+			textarea:focus {
 	border-bottom: 3px solid #5c6bc0 !important;
 }
 

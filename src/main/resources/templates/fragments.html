@@ -23,11 +23,11 @@
 				<i class="small material-icons indigo-text lighten-1-text">widgets</i>
 				<span class="indigo-text lighten-1-text hide navbar-expandable-text">Categories</span>
 			</a>
-			<a class="collection-item" title="Products page">
+			<a class="collection-item" title="Products page" th:href="@{/product/home}">
 				<i class="small material-icons indigo-text lighten-1-text">shopping_basket</i>
 				<span class="indigo-text lighten-1-text hide navbar-expandable-text">Products</span>
 			</a>
-			<a class="collection-item" title="Users page"> 
+			<a class="collection-item" title="Users page" th:href="@{/users/home}"> 
 				<i class="small material-icons indigo-text lighten-1-text">person</i>
 				<span class="indigo-text lighten-1-text hide navbar-expandable-text">Users</span>
 			</a>
@@ -47,6 +47,8 @@
 	</div>
 	
 	<div th:fragment="object_home_options" class="container top-distance">
+		<h2>[[${object.substring(0, 1).toUpperCase().concat(object.substring(1))}]] - Home</h2>
+		<br />
 		<div class="row">
 			<div class="col s6">
 				<a th:href="@{|/${object}/list|}">
@@ -100,6 +102,10 @@
    				<i class="material-icons">check</i> [[${success_message}]]
    			</li>
    		</ul>
+	</div>
+	
+	<div th:fragment="edit_button_view_page">
+		<a th:href="@{|/${object_type}/edit/${object_id}|}">Click here to edit this [[${object_type}]]</a>
 	</div>
 
 	<th:block th:fragment="js_declaration">
