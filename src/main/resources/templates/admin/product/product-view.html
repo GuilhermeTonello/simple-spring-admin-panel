@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments :: head_config(title='Viewing product ' + ${product.getName()})"></head>
+<body>
+	<div th:replace="fragments :: navbar"></div>
+	<div th:replace="fragments :: profile"></div>
+	<div class="container top-distance">
+		<h2>Viewing product: [[${product.getName()}]]</h2>
+		<br />
+		<div th:replace="fragments :: edit_button_view_page(object_type='product', object_id=${product.getId()})"></div>
+		<h3>About [[${product.getName()}]]:</h3>
+		<ul class="collection">
+			<li class="collection-item">ID: [[${product.getId()}]]</li>
+			<li class="collection-item">NAME: [[${product.getName()}]]</li>
+			<li class="collection-item">DESCRIPTION: [[${product.getDescription()}]]</li>
+			<li class="collection-item">PRICE: [[${product.getPrice()}]]</li>
+			<li class="collection-item">QUANTITY ON STOCK: [[${product.getQuantity()}]]</li>
+			<li class="collection-item">CATEGORY: 
+				<a th:href="@{/category/view/{id}(id=${product.getCategory().getId()})}">[[${product.getCategory().getName()}]]</a>
+			</li>
+		</ul>
+	</div>
+	<th:block th:replace="fragments :: js_declaration"></th:block>
+</body>
+</html>

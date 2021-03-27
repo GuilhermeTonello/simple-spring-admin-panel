@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments :: head_config(title='Product List')"></head>
+<body>
+	<div th:replace="fragments :: navbar"></div>
+	<div th:replace="fragments :: profile"></div>
+	<div class="container top-distance">
+		<h2>Category list</h2>
+		<br />
+		<div th:replace="fragments :: action_success"></div>
+		<br />
+		<div th:replace="fragments :: object_not_found(object='product')"></div>
+		<br />
+		<table class="responsive-table striped">
+			<thead>
+				<tr>
+					<th>NAME</th>
+					<th>VIEW</th>
+					<th>EDIT</th>
+					<th>DELETE</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="product : ${products}">
+					<td th:text="${product.getName()}" />
+					<td>
+						<a th:href="@{/product/view/{id}(id=${product.getId()})}">
+							<i class="material-icons light-blue-text darken-4-text">search</i>
+						</a>
+					</td>
+					<td>
+						<a th:href="@{/product/edit/{id}(id=${product.getId()})}">
+							<i class="material-icons green-text darken-4-text">edit</i>
+							</a>
+					</td>
+					<td>
+						<a th:href="@{/product/delete/{id}(id=${product.getId()})}">
+							<i class="material-icons red-text darken-2-text">delete_forever</i>
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>		
+	</div>
+	<th:block th:replace="fragments :: js_declaration"></th:block>
+</body>
+</html>

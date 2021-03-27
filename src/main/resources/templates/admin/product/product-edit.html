@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments :: head_config(title='Product Creation')"></head>
+<body>
+	<div th:replace="fragments :: navbar"></div>
+	<div th:replace="fragments :: profile"></div>
+	<div class="container top-distance">
+		<h2>Editing now: [[${product.getName()}]]</h2>
+		<br />
+		<div th:replace="fragments :: errors_list"></div>
+		<br />
+		<form method="POST" th:action="@{/product/edit/{id}(id=${product.getId()})}" th:object="${product}">
+			<input type="hidden" th:field="*{id}" />
+		
+			<div class="input-field">
+				<label for="name">Product name</label>
+				<input type="text" th:field="*{name}" />
+			</div>
+			
+			<div class="input-field">
+				<label for="description">Product description</label>
+				<textarea th:field="*{description}" class="materialize-textarea"></textarea>
+			</div>
+			
+			<div class="input-field">
+				<label for="price">Product price</label>
+				<input type="number" th:field="*{price}" step="0.01" />
+			</div>
+			
+			<div class="input-field">
+				<label for="quantity">Product quantity</label>
+				<input type="number" th:field="*{quantity}" />
+			</div>
+			
+			<div class="input-field">
+				<label for="category">Product category</label>
+				<br />
+				<br />
+				<select class="browser-default" th:field="*{category}">
+					<option value="" disabled selected>Choose the category</option>
+					<option th:each="category : ${categories}" th:value="${category.getId()}">[[${category.getName()}]]</option>
+				</select>
+			</div>
+			
+			<button type="submit" class="btn large submit-button">
+				Save product
+				<i class="material-icons right">send</i>
+			</button>
+		</form>
+	</div>
+	<th:block th:replace="fragments :: js_declaration"></th:block>
+</body>
+</html>
