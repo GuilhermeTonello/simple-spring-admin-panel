@@ -2,6 +2,7 @@ package com.gui.adminpanel.model;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,6 +11,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(uniqueConstraints = {
@@ -22,9 +26,12 @@ public class Category {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_category_id")
 	private Long id;
 	
+	@NotBlank(message = "Category name is empty")
+	@NotNull
+	@Size(max = 255, message = "Category name must be between 1 and 255 characters")
 	private String name;
 	
-	@OneToMany(mappedBy = "id")
+	@OneToMany(mappedBy = "category", orphanRemoval = true, cascade = CascadeType.ALL)
 	private Set<Product> products;
 
 	public Long getId() {
