@@ -50,21 +50,21 @@ INSERT INTO users(
 	id, first_name, last_name, username, password, email, phone, rg, cpf, sex, date_of_birth, salary, address)
 	VALUES (1, 'John', 'Doe', 'admin', '$2a$10$/itBmOYgnKHtQRUO7x4n7OXS0c9XK5QuESbv4/U7Cdk7jTwrrfIfe', 'johndoe@email.com',
 			'944444444', '999999999', '99999999999', 'MALE', '1990-01-15', 2500.50,
-			'{"zipcode": "69901064", "street": "Rua Morango", "city": "Rio Branco", "state": "AC", "complement": 201}');
+			'{"zipcode": "69901064", "street": "Rua Morango", "city": "Rio Branco", "state": "AC", "complement": "number 20, apartment 98"}');
 SELECT nextval('seq_user_id');
 
 INSERT INTO users(
 	id, first_name, last_name, username, password, email, phone, rg, cpf, sex, date_of_birth, salary, address)
 	VALUES (2, 'Jane', 'Doe', 'employee', '$2a$10$bTLsn8hLussGo86nyLAVfO2IypahB2SjYIRCf5SOOhX42F3B3q0yO', 'janedoe@email.com',
 			'922222222', '111111111', '11111111111', 'FEMALE', '1988-12-17', 2000.60,
-			'{"zipcode": "78138036", "street": "Rua Marechal Mascarenha de Moraes", "city": "Várzea Grande", "state": "MT", "complement": 7008}');
+			'{"zipcode": "78138036", "street": "Rua Marechal Mascarenha de Moraes", "city": "Várzea Grande", "state": "MT", "complement": "number 7008"}');
 SELECT nextval('seq_user_id');
 
 INSERT INTO users(
 	id, first_name, last_name, username, password, email, phone, rg, cpf, sex, date_of_birth, salary, address)
-	VALUES (3, 'Richard', 'Roe', 'trainee', '$2a$10$JckZDQrZp2J5oLLbiXHFDetKqT4aJtnx3AH5ErphjYlmw6O6N4ySu', 'johndoe@email.com',
+	VALUES (3, 'Richard', 'Roe', 'trainee', '$2a$10$JckZDQrZp2J5oLLbiXHFDetKqT4aJtnx3AH5ErphjYlmw6O6N4ySu', 'richardroe@email.com',
 			'933333333', '333333333', '55555555555', 'MALE', '1999-06-08', 1500.10,
-			'{"zipcode": "58081270", "street": "Rua Professor João Freire da Nóbrega", "city": "João Pessoa", "state": "PB", "complement": 90}');
+			'{"zipcode": "58081270", "street": "Rua Professor João Freire da Nóbrega", "city": "João Pessoa", "state": "PB", "complement": "number 2901, first floor, apartment 15"}');
 SELECT nextval('seq_user_id');
 
 -- INSERTING USERS WITH ROLES
