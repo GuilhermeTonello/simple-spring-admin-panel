@@ -35,7 +35,9 @@
 							</a>
 					</td>
 					<td>
-						<a th:href="@{/product/delete/{id}(id=${product.getId()})}">
+						<a th:href="@{/product/delete/{id}(id=${product.getId()})}"
+							th:confirm-delete="|Are you sure to delete ${product.getName()}?|" 
+							onclick="return confirm(this.getAttribute('confirm-delete'));">
 							<i class="material-icons red-text darken-2-text">delete_forever</i>
 						</a>
 					</td>
