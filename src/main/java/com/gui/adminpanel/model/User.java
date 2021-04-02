@@ -92,8 +92,7 @@ public class User implements UserDetails {
 	@NotNull
 	private String phone;
 	
-	@NotBlank(message = "Gender field is empty")
-	@NotNull
+	@NotNull(message = "Gender field is empty")
 	@Enumerated(EnumType.STRING)
 	private Gender gender;
 	
