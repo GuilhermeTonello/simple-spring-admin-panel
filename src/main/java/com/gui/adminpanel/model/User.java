@@ -7,6 +7,8 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -90,9 +92,10 @@ public class User implements UserDetails {
 	@NotNull
 	private String phone;
 	
-	@NotBlank(message = "Sex field is empty")
+	@NotBlank(message = "Gender field is empty")
 	@NotNull
-	private String sex;
+	@Enumerated(EnumType.STRING)
+	private Gender gender;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Temporal(TemporalType.DATE)
@@ -134,6 +137,10 @@ public class User implements UserDetails {
 		return lastName;
 	}
 	
+	public String getCompleteName() {
+		return String.format("%s %s", getFirstName(), getLastName());
+	}
+	
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
@@ -170,12 +177,12 @@ public class User implements UserDetails {
 		this.phone = phone;
 	}
 	
-	public String getSex() {
-		return sex;
+	public Gender getGender() {
+		return gender;
 	}
 	
-	public void setSex(String sex) {
-		this.sex = sex;
+	public void setGender(Gender gender) {
+		this.gender = gender;
 	}
 	
 	public Date getDateOfBirth() {
