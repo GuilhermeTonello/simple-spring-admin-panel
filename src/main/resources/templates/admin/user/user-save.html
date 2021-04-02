@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments :: head_config(title='User forms')"></head>
+<body>
+	<div th:replace="fragments :: navbar"></div>
+	<div th:replace="fragments :: profile"></div>
+	<div class="container top-distance" sec:authorize="hasRole('ADMIN')">
+		<h2 th:if="${editing}">Editing now: [[${user.getCompleteName()}]]</h2>
+		<h2 th:if="${!editing}">Create new user</h2>
+		<br />
+		<div th:replace="fragments :: errors_list"></div>
+		<br />
+		<form method="POST" th:action="@{/users/save}" th:object="${user}">
+			<input type="hidden" th:field="*{id}" />
+			<h4>General information:</h4>
+			<div class="input-field">
+				<label for="firstName">First name</label>
+				<input type="text" th:field="*{firstName}" />
+			</div>
+			
+			<div class="input-field">
+				<label for="lastName">Last name</label>
+				<input type="text" th:field="*{lastName}" />
+			</div>
+			
+			<div class="input-field">
+				<label for="username">Username</label>
+				<input type="text" th:field="*{username}" />
+			</div>
+			
+			<div class="input-field" th:if="${!editing}">
+				<label for="password">Password</label>
+				<input type="password" th:field="*{password}" />
+			</div>
+			
+			<div class="input-field">
+				<label for="email">E-Mail</label>
+				<input type="email" th:field="*{email}" />
+			</div>
+			
+			<div class="input-field">
+				<label for="rg">RG</label>
+				<input type="text" th:field="*{rg}" />
+				<span class="helper-text">Don't use special characters like "-" and "."</span>
+			</div>
+			
+			<div class="input-field">
+				<label for="cpf">CPF</label>
+				<input type="text" th:field="*{cpf}" />
+			</div>
+			
+			<div class="input-field">
+				<label for="phone">Phone number</label>
+				<input type="text" th:field="*{phone}" />
+				<span class="helper-text">Don't use "-"</span>
+			</div>
+			
+			<div class="input-field">
+				<label for="category">Gender</label>
+				<br />
+				<br />
+				<select class="browser-default" th:field="*{gender}">
+					<option value="" disabled selected>Choose the gender</option>
+					<option th:each="gender : ${T(com.gui.adminpanel.model.Gender).values()}" th:value="${gender}" th:text="${gender}" />
+				</select>
+			</div>
+			
+			<div class="input-field">
+				<label for="dateOfBirth">Date of birth</label>
+				<br />
+				<input type="date" th:field="*{dateOfBirth}" />
+			</div>
+			
+			<div class="input-field">
+				<label for="salary">Salary</label>
+				<input type="number" th:field="*{salary}" step="0.01" />
+			</div>
+			
+			<h4>Address:</h4>
+			<div class="input-field">
+				<label for="address.zipcode">Zip code</label>
+				<input type="text" th:field="*{address.zipcode}" onchange="searchZipcode();" />
+			</div>
+			
+			<div class="input-field">
+				<label for="address.street">Street</label>
+				<input type="text" th:field="*{address.street}" />
+			</div>
+			
+			<div class="input-field">
+				<label for="address.city">City</label>
+				<input type="text" th:field="*{address.city}" />
+			</div>
+			
+			
+			<div class="input-field">
+				<label for="address.state">State</label>
+				<br />
+				<br />
+				<select class="browser-default" th:field="*{address.state}">
+					<option value="" disabled selected>Choose the category</option>
+				    <option value="AC">Acre</option>
+				    <option value="AL">Alagoas</option>
+				    <option value="AP">Amapá</option>
+				    <option value="AM">Amazonas</option>
+				    <option value="BA">Bahia</option>
+				    <option value="CE">Ceará</option>
+				    <option value="DF">Distrito Federal</option>
+				    <option value="ES">Espírito Santo</option>
+				    <option value="GO">Goiás</option>
+				    <option value="MA">Maranhão</option>
+				    <option value="MT">Mato Grosso</option>
+				    <option value="MS">Mato Grosso do Sul</option>
+				    <option value="MG">Minas Gerais</option>
+				    <option value="PA">Pará</option>
+				    <option value="PB">Paraíba</option>
+				    <option value="PR">Paraná</option>
+				    <option value="PE">Pernambuco</option>
+				    <option value="PI">Piauí</option>
+				    <option value="RJ">Rio de Janeiro</option>
+				    <option value="RN">Rio Grande do Norte</option>
+				    <option value="RS">Rio Grande do Sul</option>
+				    <option value="RO">Rondônia</option>
+				    <option value="RR">Roraima</option>
+				    <option value="SC">Santa Catarina</option>
+				    <option value="SP">São Paulo</option>
+				    <option value="SE">Sergipe</option>
+				    <option value="TO">Tocantins</option>
+				    <option value="EX">Estrangeiro</option>
+				</select>
+			</div>
+			
+			<div class="input-field">
+				<label for="address.complement">Complement</label>
+				<input type="text" th:field="*{address.complement}" />
+			</div>
+			
+			<h4>Authorizations:</h4>
+			<p th:each="role : ${roles}">
+				<label>
+					<input type="checkbox" class="filled-in" name="roles" 
+						th:value="${role.getId()}" 
+						th:checked="${user.getRoles().contains(role)}" />
+					<span>[[${role.getRole().substring(5)}]]</span>
+				</label>
+      		</p>
+      		
+			<button type="submit" class="btn large submit-button bottom-distance">
+				Save user
+				<i class="material-icons right">send</i>
+			</button>
+		</form>
+	</div>
+	<th:block th:replace="fragments :: js_declaration"></th:block>
+	<script>
+		function searchZipcode() {
+			fetch('https://viacep.com.br/ws/' + document.getElementById('address.zipcode').value + '/json')
+				.then(response => response.json())
+				.then(data => {
+					document.getElementById('address.street').value = data.logradouro;
+					document.getElementById('address.city').value = data.localidade;
+					document.getElementById('address.state').value = data.uf;
+				});
+		}
+	</script>
+</body>
+</html>

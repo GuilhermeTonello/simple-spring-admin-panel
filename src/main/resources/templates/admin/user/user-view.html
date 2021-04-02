@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments :: head_config(title='Viewing user ' + ${user.getCompleteName()})"></head>
+<body>
+	<div th:replace="fragments :: navbar"></div>
+	<div th:replace="fragments :: profile"></div>
+	<div class="container top-distance" sec:authorize="hasRole('ADMIN')">
+		<h2>Viewing user: [[${user.getCompleteName()}]]</h2>
+		<br />
+		<div th:replace="fragments :: edit_button_view_page(object_type='users', object_id=${user.getId()})"></div>
+		<h3>About [[${user.getCompleteName()}]]:</h3>
+		<ul class="collection">
+			<li class="collection-item">ID: [[${user.getId()}]]</li>
+			<li class="collection-item">FIRST NAME: [[${user.getFirstName()}]]</li>
+			<li class="collection-item">LAST NAME: [[${user.getLastName()}]]</li>
+			<li class="collection-item">COMPLETE NAME: [[${user.getCompleteName()}]]</li>
+			<li class="collection-item">USERNAME: [[${user.getUsername()}]]</li>
+			<li class="collection-item">E-MAIL: [[${user.getEmail()}]]</li>
+			<li class="collection-item">RG: [[${user.getRg()}]]</li>
+			<li class="collection-item">CPF: [[${user.getCpf()}]]</li>
+			<li class="collection-item">PHONE NUMBER: [[${user.getPhone()}]]</li>
+			<li class="collection-item">GENDER: [[${user.getGender()}]]</li>
+			<li class="collection-item">DATE OF BIRTH (year-month-day): [[${user.getDateOfBirth()}]]</li>
+			<li class="collection-item">SALARY: [[${user.getSalary()}]]</li>
+		</ul>
+		
+		<h3>[[${user.getCompleteName()}]] address:</h3>
+		<ul class="collection">
+			<li class="collection-item">ZIP CODE: [[${user.getAddress().getZipcode()}]]</li>
+			<li class="collection-item">STREET: [[${user.getAddress().getStreet()}]]</li>
+			<li class="collection-item">CITY: [[${user.getAddress().getCity()}]]</li>
+			<li class="collection-item">STATE: [[${user.getAddress().getState()}]]</li>
+			<li class="collection-item">COMPLEMENT: [[${user.getAddress().getComplement()}]]</li>
+		</ul>
+		
+		<h3>[[${user.getCompleteName()}]] roles:</h3>
+		<ul class="collection">
+			<li class="collection-item" th:each="role : ${user.getRoles()}">
+				[[${role.getRole().substring(5)}]]
+			</li>
+		</ul>
+	</div>
+	<th:block th:replace="fragments :: js_declaration"></th:block>
+</body>
+</html>

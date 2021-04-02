@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments :: head_config(title='Users List')"></head>
+<body>
+	<div th:replace="fragments :: navbar"></div>
+	<div th:replace="fragments :: profile"></div>
+	<div class="container top-distance" sec:authorize="hasRole('ADMIN')">
+		<h2>Category list</h2>
+		<br />
+		<div th:replace="fragments :: action_success"></div>
+		<br />
+		<div th:replace="fragments :: object_not_found(object='user')"></div>
+		<br />
+		<table class="responsive-table striped">
+			<thead>
+				<tr>
+					<th>COMPLETE NAME</th>
+					<th>CPF</th>
+					<th>RG</th>
+					<th>E-MAIL</th>
+					<th>VIEW</th>
+					<th>EDIT</th>
+					<th>DELETE</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="user : ${users}">
+					<td th:text="${user.getCompleteName()}" />
+					<td th:text="${user.getCpf()}" />
+					<td th:text="${user.getRg()}" />
+					<td th:text="${user.getEmail()}" />
+					<td>
+						<a th:href="@{/users/view/{id}(id=${user.getId()})}">
+							<i class="material-icons light-blue-text darken-4-text">search</i>
+						</a>
+					</td>
+					<td>
+						<a th:href="@{/users/edit/{id}(id=${user.getId()})}">
+							<i class="material-icons green-text darken-4-text">edit</i>
+							</a>
+					</td>
+					<td>
+						<a th:href="@{/users/delete/{id}(id=${user.getId()})}"
+							th:confirm-delete="|Are you sure to delete ${user.getCompleteName()}?|" 
+							onclick="return confirm(this.getAttribute('confirm-delete'));">
+							<i class="material-icons red-text darken-2-text">delete_forever</i>
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>		
+	</div>
+	<th:block th:replace="fragments :: js_declaration"></th:block>
+</body>
+</html>
