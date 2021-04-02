@@ -63,7 +63,7 @@ $ git clone https://github.com/GuilhermeTonello/simple-spring-admin-panel.git
 ### Configuration
 **Note**: ***If you don't know what you are doing, I recommend you to just configure the database changing only*** *spring.datasource.url*, *spring.datasource.username* ***and*** *spring.datasource.password*.
 
-##### Database configuration
+#### Database configuration
 1. Open the file **application.properties** localized in **src/main/resources**
 2. Change the following configurations as you like
     - *spring.jpa.hibernate.ddl-auto*
@@ -94,7 +94,7 @@ $ git clone https://github.com/GuilhermeTonello/simple-spring-admin-panel.git
 4. If you want to change the database you will have to change **PostgreSQL dependency** on **pom.xml**
 **Note**: ***Changing the database may cause errors on users table due to the jsonb type***
 
-##### Security configuration
+#### Security configuration
 **Note**: ***This section is for people who knows how to use Spring Security***
 1. You will need to know about **Spring Security** to configure this, to learn more, see https://docs.spring.io/spring-security/site/docs/5.4.5/reference/html5/
 2. To configure the security, access **src/main/java/com/gui/adminpanel/security/ApplicationSecurityConfiguration.java**
@@ -124,14 +124,14 @@ $ git clone https://github.com/GuilhermeTonello/simple-spring-admin-panel.git
 2. Go to the project root. This is where you have the **pom.xml** file, **src** folder etc
 3. Open the terminal on this folder
 4. Type the following on terminal and press ENTER:
-    MacOS/Linux
-    ```sh
-    $ ./mvnw spring-boot:run
-    ```
-    Windows
-    ```sh
-    $ mvnw spring-boot:run
-    ```
+    - MacOS/Linux
+		```sh
+		$ ./mvnw spring-boot:run
+		```
+    - Windows
+		```sh
+		$ mvnw spring-boot:run
+		```
 5. Open a browser, and on the search bar, use this: **localhost:8080**
 6. If you already have the port 8080 running, go to **src/main/resourcers/application.properties** and add this: *server.port=YOUR PORT HERE*. Example: *server.port=8081*. Then **Ctrl + C** to stop the project and run it again following the previous topic.
 7. To close the project, type **Ctrl + C** on terminal and press ENTER.
