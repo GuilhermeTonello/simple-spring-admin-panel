@@ -1,12 +1,55 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments :: head_config(title='Index')"></head>
 <body>
 	<div th:replace="fragments :: navbar"></div>
 	<div th:replace="fragments :: profile"></div>
-	<div class="container">
-		The content is here
+	<div class="container top-distance">
+		<div class="row">
+		
+			<div class="col s6" sec:authorize="hasAnyRole('ADMIN', 'EMPLOYEE', 'TRAINEE')">
+				<a th:href="@{/category/home}">
+					<div class="card white hoverable">
+						<div class="card-content indigo-text darken-1-text">
+							<span class="card-title bold">Category page</span>
+							<p>Click on this card if you want to go to category page</p>
+						</div>
+						<div class="card-action">
+							<button class="btn object-home-page-button">GO</button>
+						</div>
+					</div>
+				</a>
+			</div>
+			
+			<div class="col s6" sec:authorize="hasAnyRole('ADMIN', 'EMPLOYEE', 'TRAINEE')">
+				<a th:href="@{/product/home}">
+					<div class="card white hoverable">
+						<div class="card-content indigo-text darken-1-text">
+							<span class="card-title bold">Product page</span>
+							<p>Click on this card if you want to go to product page</p>
+						</div>
+						<div class="card-action">
+							<button class="btn object-home-page-button">GO</button>
+						</div>
+					</div>
+				</a>
+			</div>
+			
+			<div class="col s6" sec:authorize="hasRole('ADMIN')">
+				<a th:href="@{/users/home}">
+					<div class="card white hoverable">
+						<div class="card-content indigo-text darken-1-text">
+							<span class="card-title bold">Users page</span>
+							<p>Click on this card if you want to go to users page</p>
+						</div>
+						<div class="card-action">
+							<button class="btn object-home-page-button">GO</button>
+						</div>
+					</div>
+				</a>
+			</div>
+			
+		</div>
 	</div>
 	<div th:replace="fragments :: js_declaration"></div>
 </body>

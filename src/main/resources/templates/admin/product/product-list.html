@@ -17,8 +17,8 @@
 				<tr>
 					<th>NAME</th>
 					<th>VIEW</th>
-					<th>EDIT</th>
-					<th>DELETE</th>
+					<th sec:authorize="hasAnyRole('ADMIN', 'EMPLOYEE')">EDIT</th>
+					<th sec:authorize="hasRole('ADMIN')">DELETE</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -29,12 +29,12 @@
 							<i class="material-icons light-blue-text darken-4-text">search</i>
 						</a>
 					</td>
-					<td>
+					<td sec:authorize="hasAnyRole('ADMIN', 'EMPLOYEE')">
 						<a th:href="@{/product/edit/{id}(id=${product.getId()})}">
 							<i class="material-icons green-text darken-4-text">edit</i>
-							</a>
+						</a>
 					</td>
-					<td>
+					<td sec:authorize="hasRole('ADMIN')">
 						<a th:href="@{/product/delete/{id}(id=${product.getId()})}"
 							th:confirm-delete="|Are you sure to delete ${product.getName()}?|" 
 							onclick="return confirm(this.getAttribute('confirm-delete'));">

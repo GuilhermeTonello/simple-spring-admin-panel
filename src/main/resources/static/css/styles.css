@@ -39,6 +39,7 @@
 .input-field input[type=text]:focus,
 			input[type=password]:focus,
 			input[type=number]:focus,
+			input[type=email]:focus,
 			textarea:focus {
 	border-bottom: 3px solid #5c6bc0 !important;
 }
@@ -59,6 +60,10 @@
 
 .top-distance {
 	padding-top: 3%;
+}
+
+.bottom-distance {
+	margin-bottom: 5%;
 }
 
 .submit-button {

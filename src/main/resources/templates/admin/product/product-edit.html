@@ -5,7 +5,7 @@
 <body>
 	<div th:replace="fragments :: navbar"></div>
 	<div th:replace="fragments :: profile"></div>
-	<div class="container top-distance">
+	<div class="container top-distance" sec:authorize="hasAnyRole('ADMIN', 'EMPLOYEE')">
 		<h2>Editing now: [[${product.getName()}]]</h2>
 		<br />
 		<div th:replace="fragments :: errors_list"></div>
