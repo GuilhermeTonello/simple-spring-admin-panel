@@ -8,12 +8,14 @@ import java.util.Set;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.gui.adminpanel.model.Role;
@@ -42,9 +44,10 @@ public class UserController {
 	}
 	
 	@GetMapping("list")
-	public ModelAndView userListPage() {
+	public ModelAndView userListPage(@RequestParam("page") Optional<Integer> page) {
+		int currentPage = page.orElse(1);
 		ModelAndView modelAndView = new ModelAndView("admin/user/user-list");
-		modelAndView.addObject("users", userRepository.findAll());
+		modelAndView.addObject("users", userRepository.findAll(PageRequest.of(currentPage - 1, 5)));
 		return modelAndView;
 	}
 	
@@ -56,7 +59,7 @@ public class UserController {
 			modelAndView.addObject("user", user.get());
 			return modelAndView;
 		}
-		return userListPage()
+		return userListPage(Optional.of(1))
 				.addObject("object_is_not_present", true);
 	}
 	
@@ -81,7 +84,7 @@ public class UserController {
 			return userCreatePage()
 					.addObject("user", user.get());
 		}
-		return userListPage()
+		return userListPage(Optional.of(1))
 				.addObject("object_is_not_present", true);
 	}
 	
@@ -113,7 +116,7 @@ public class UserController {
 		}
 		
 		userRepository.save(user);
-		return userListPage()
+		return userListPage(Optional.of(1))
 				.addObject("success_message", "User " + user.getCompleteName() + " saved");
 	}
 	
@@ -122,10 +125,10 @@ public class UserController {
 		Optional<User> user = userRepository.findById(id);
 		if (user.isPresent()) {
 			userRepository.deleteById(id);
-			return userListPage()
+			return userListPage(Optional.of(1))
 					.addObject("success_message", "User " + user.get().getCompleteName() + " deleted");
 		}
-		return userListPage()
+		return userListPage(Optional.of(1))
 				.addObject("object_is_not_present", true);
 	}
 

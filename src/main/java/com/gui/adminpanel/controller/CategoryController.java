@@ -5,6 +5,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.gui.adminpanel.model.Category;
@@ -31,9 +33,10 @@ public class CategoryController {
 	}
 	
 	@GetMapping("list")
-	public ModelAndView categoryListPage() {
+	public ModelAndView categoryListPage(@RequestParam("page") Optional<Integer> page) {
+		int currentPage = page.orElse(1);
 		ModelAndView modelAndView = new ModelAndView("admin/category/category-list");
-		modelAndView.addObject("categories", categoryRepository.findAll());
+		modelAndView.addObject("categories", categoryRepository.findAll(PageRequest.of(currentPage - 1, 5)));
 		return modelAndView;
 	}
 	
@@ -45,7 +48,7 @@ public class CategoryController {
 			modelAndView.addObject("category", category.get());
 			return modelAndView;
 		}
-		return categoryListPage()
+		return categoryListPage(Optional.of(1))
 				.addObject("object_is_not_present", true);
 	}
 	
@@ -64,7 +67,7 @@ public class CategoryController {
 			modelAndView.addObject("category", category.get());
 			return modelAndView;
 		}
-		return categoryListPage()
+		return categoryListPage(Optional.of(1))
 				.addObject("object_is_not_present", true);
 	}
 	
@@ -79,7 +82,7 @@ public class CategoryController {
 					.addObject("field_errors", result.getAllErrors());
 		}
 		categoryRepository.save(category);
-		return categoryListPage()
+		return categoryListPage(Optional.of(1))
 				.addObject("success_message", "Category " + category.getName() + " created");
 	}
 	
@@ -87,7 +90,7 @@ public class CategoryController {
 	public ModelAndView categoryEditAction(@PathVariable("id") Long id, @Valid Category category, BindingResult result) {
 		Optional<Category> optionalCategoryById = categoryRepository.findById(id);
 		if (!optionalCategoryById.isPresent()) {
-			return categoryListPage()
+			return categoryListPage(Optional.of(1))
 					.addObject("object_is_not_present", true);
 		}
 		Optional<Category> optionalCategoryByName = categoryRepository.findCategoryByName(category.getName());
@@ -100,7 +103,7 @@ public class CategoryController {
 		}
 		category.setProducts(optionalCategoryById.get().getProducts());
 		categoryRepository.save(category);
-		return categoryListPage()
+		return categoryListPage(Optional.of(1))
 				.addObject("success_message", "Category " + category.getName() + " edited");
 	}
 	
@@ -109,10 +112,10 @@ public class CategoryController {
 		Optional<Category> category = categoryRepository.findById(id);
 		if (category.isPresent()) {
 			categoryRepository.deleteById(id);
-			return categoryListPage()
+			return categoryListPage(Optional.of(1))
 					.addObject("success_message", "Category " + category.get().getName() + " deleted");
 		}
-		return categoryListPage()
+		return categoryListPage(Optional.of(1))
 				.addObject("object_is_not_present", true);
 	}
 	

@@ -25,7 +25,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="user : ${users}">
+				<tr th:each="user : ${users.getContent()}">
 					<td th:text="${user.getCompleteName()}" />
 					<td th:text="${user.getCpf()}" />
 					<td th:text="${user.getRg()}" />
@@ -50,6 +50,11 @@
 				</tr>
 			</tbody>
 		</table>		
+		<div class="center-align">
+			<a th:if="${users.getNumber() > 0}" th:href="@{|/users/list?page=${users.getNumber()}|}">Previous</a>
+			[[${users.getNumber() + 1}]]
+			<a th:if="${users.getNumber() < users.getTotalPages() - 1}" th:href="@{|/users/list?page=${users.getNumber() + 2}|}">Next</a>
+		</div>
 	</div>
 	<th:block th:replace="fragments :: js_declaration"></th:block>
 </body>

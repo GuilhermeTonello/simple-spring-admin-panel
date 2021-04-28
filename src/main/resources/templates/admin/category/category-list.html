@@ -22,7 +22,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="category : ${categories}">
+				<tr th:each="category : ${categories.getContent()}">
 					<td th:text="${category.getName()}" />
 					<td>
 						<a th:href="@{/category/view/{id}(id=${category.getId()})}">
@@ -43,7 +43,12 @@
 					</td>
 				</tr>
 			</tbody>
-		</table>		
+		</table>
+		<div class="center-align">
+			<a th:if="${categories.getNumber() > 0}" th:href="@{|/category/list?page=${categories.getNumber()}|}">Previous</a>
+			[[${categories.getNumber() + 1}]]
+			<a th:if="${categories.getNumber() < categories.getTotalPages() - 1}" th:href="@{|/category/list?page=${categories.getNumber() + 2}|}">Next</a>
+		</div>
 	</div>
 	<th:block th:replace="fragments :: js_declaration"></th:block>
 </body>
