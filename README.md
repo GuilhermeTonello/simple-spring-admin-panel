@@ -12,6 +12,7 @@
 	    - Security
 	    - Users
 - Running the project
+- Images
 
 ## About
 
@@ -135,3 +136,23 @@ $ git clone https://github.com/GuilhermeTonello/simple-spring-admin-panel.git
 5. Open a browser, and on the search bar, use this: **localhost:8080**
 6. If you already have the port 8080 running, go to **src/main/resourcers/application.properties** and add this: *server.port=YOUR PORT HERE*. Example: *server.port=8081*. Then **Ctrl + C** to stop the project and run it again following the previous topic.
 7. To close the project, type **Ctrl + C** on terminal and press ENTER.
+
+## Images
+
+#### Login page:
+![Login page](https://github.com/GuilhermeTonello/simple-spring-admin-panel/blob/master/images/login-page.png?raw=true)
+
+#### Home page as admin:
+![Home page as admin](https://github.com/GuilhermeTonello/simple-spring-admin-panel/blob/master/images/home-page-as-admin.png?raw=true)
+
+#### Category list page as admin:
+![Category list page as admin](https://github.com/GuilhermeTonello/simple-spring-admin-panel/blob/master/images/category-list-page-as-admin.png?raw=true)
+
+#### Product list page as trainee:
+![Product list page as trainee](https://github.com/GuilhermeTonello/simple-spring-admin-panel/blob/master/images/product-list-page-as-trainee.png?raw=true)
+
+#### Viewing one category as admin:
+![Viewing one category as admin](https://github.com/GuilhermeTonello/simple-spring-admin-panel/blob/master/images/viewing-category-tools-as-admin-or-employee.png?raw=true)
+
+#### Product creation page:
+![Product creation page](https://github.com/GuilhermeTonello/simple-spring-admin-panel/blob/master/images/product-create-page.png?raw=true)
