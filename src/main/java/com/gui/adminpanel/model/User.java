@@ -38,8 +38,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 
 @Entity
-@Table(name = "users", 
-	uniqueConstraints = @UniqueConstraint(columnNames = {"username", "email", "rg", "cpf"}, name = "user_unique_fields_check")
+@Table(
+	uniqueConstraints = {
+			@UniqueConstraint(columnNames = {"username"}, name = "unique_user_username"),
+			@UniqueConstraint(columnNames = {"email"}, name = "unique_user_email"),
+			@UniqueConstraint(columnNames = {"cpf"}, name = "unique_user_cpf"),
+			@UniqueConstraint(columnNames = {"rg"}, name = "unique_user_rg")
+	},
+	name = "users"
 )
 @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 public class User implements UserDetails {

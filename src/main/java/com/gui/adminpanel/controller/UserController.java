@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -109,15 +110,23 @@ public class UserController {
 		Double userSalaryDouble = Double.parseDouble(userSalaryString);
 		user.setSalary(BigDecimal.valueOf(userSalaryDouble));
 		
-		if (user.getId() != null) {
+		if (user.getId() != null && user.getPassword().isBlank()) {
 			user.setPassword(userRepository.findById(user.getId()).get().getPassword());
 		} else {
 			user.setPassword(passwordEncoderConfiguration.passwordEncoder().encode(user.getPassword()));
 		}
 		
-		userRepository.save(user);
-		return userListPage(Optional.of(1))
-				.addObject("success_message", "User " + user.getCompleteName() + " saved");
+		try {
+			userRepository.save(user);
+			return userListPage(Optional.of(1))
+					.addObject("success_message", "User " + user.getCompleteName() + " saved");
+		} catch (Exception e) {
+			result.addError(new ObjectError("user", "One or more of the following fields already exists: username, email, cpf, rg"));
+			return userCreatePage()
+					.addObject("field_errors", result.getAllErrors())
+					.addObject("user", user)
+					.addObject("roles", roleRepository.findAll());
+		}
 	}
 	
 	@GetMapping("delete/{id}")
