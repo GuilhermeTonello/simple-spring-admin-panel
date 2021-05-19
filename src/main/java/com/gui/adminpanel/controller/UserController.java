@@ -92,9 +92,6 @@ public class UserController {
 	
 	@PostMapping("save")
 	public ModelAndView userCreateOrEditAction(@Valid User user, BindingResult result) {
-		System.out.println("-------------------------------------------");
-		System.out.println("id: " + user.getId());
-		System.out.println("-------------------------------------------");
 		if (user.getRoles() == null || user.getRoles().isEmpty()) {
 			if (user.getId() == null) {
 				result.addError(new ObjectError("user", "Roles field is empty"));
