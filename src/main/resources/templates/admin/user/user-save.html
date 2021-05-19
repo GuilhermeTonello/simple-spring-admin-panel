@@ -29,7 +29,7 @@
 				<input type="text" th:field="*{username}" />
 			</div>
 			
-			<div class="input-field" th:if="${!editing}">
+			<div class="input-field">
 				<label for="password">Password</label>
 				<input type="password" th:field="*{password}" />
 			</div>
@@ -136,7 +136,7 @@
 				<input type="text" th:field="*{address.complement}" />
 			</div>
 			
-			<h4>Authorizations:</h4>
+			<h4>Roles:</h4>
 			<p th:each="role : ${roles}">
 				<label>
 					<input type="checkbox" class="filled-in" name="roles" 

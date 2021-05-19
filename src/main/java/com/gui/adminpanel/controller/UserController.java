@@ -44,7 +44,7 @@ public class UserController {
 		return modelAndView;
 	}
 	
-	@GetMapping("list")
+	@GetMapping({"list", "save"})
 	public ModelAndView userListPage(@RequestParam("page") Optional<Integer> page) {
 		int currentPage = page.orElse(1);
 		ModelAndView modelAndView = new ModelAndView("admin/user/user-list");
@@ -83,7 +83,8 @@ public class UserController {
 		Optional<User> user = userRepository.findById(id);
 		if (user.isPresent()) {
 			return userCreatePage()
-					.addObject("user", user.get());
+					.addObject("user", user.get())
+					.addObject("editing", true);
 		}
 		return userListPage(Optional.of(1))
 				.addObject("object_is_not_present", true);
@@ -91,30 +92,40 @@ public class UserController {
 	
 	@PostMapping("save")
 	public ModelAndView userCreateOrEditAction(@Valid User user, BindingResult result) {
+		System.out.println("-------------------------------------------");
+		System.out.println("id: " + user.getId());
+		System.out.println("-------------------------------------------");
+		if (user.getRoles() == null || user.getRoles().isEmpty()) {
+			if (user.getId() == null) {
+				result.addError(new ObjectError("user", "Roles field is empty"));
+			} else {
+				Optional<User> u = userRepository.findById(user.getId());
+				user.setRoles(u.get().getRoles());
+			}
+		}
 		if (result.hasErrors()) {
 			if (user.getId() == null) {
 				Set<Role> userRoles = new HashSet<>();
 				user.setRoles(userRoles);
 			}
-			return userCreatePage()
-					.addObject("field_errors", result.getAllErrors())
-					.addObject("user", user)
-					.addObject("roles", roleRepository.findAll());
+			return user.getId() == null
+					? userCreatePage()
+							.addObject("field_errors", result.getAllErrors())
+							.addObject("user", user)
+					: userEditPage(user.getId())
+						.addObject("field_errors", result.getAllErrors())
+						.addObject("user", user);
 		}
 		user.setRg(user.getRg().replaceAll("[-]|[.]", ""));
 		user.setCpf(user.getCpf().replaceAll("[-]|[.]", ""));
 		user.getAddress().setZipcode(user.getAddress().getZipcode().replaceAll("[-]", ""));
 		user.setPhone(user.getPhone().replaceAll("[-]", ""));
 		
+		user.setPassword(passwordEncoderConfiguration.passwordEncoder().encode(user.getPassword()));
+		
 		String userSalaryString = String.valueOf(user.getSalary()).replace(",", ".");
 		Double userSalaryDouble = Double.parseDouble(userSalaryString);
 		user.setSalary(BigDecimal.valueOf(userSalaryDouble));
-		
-		if (user.getId() != null && user.getPassword().isBlank()) {
-			user.setPassword(userRepository.findById(user.getId()).get().getPassword());
-		} else {
-			user.setPassword(passwordEncoderConfiguration.passwordEncoder().encode(user.getPassword()));
-		}
 		
 		try {
 			userRepository.save(user);
@@ -122,10 +133,17 @@ public class UserController {
 					.addObject("success_message", "User " + user.getCompleteName() + " saved");
 		} catch (Exception e) {
 			result.addError(new ObjectError("user", "One or more of the following fields already exists: username, email, cpf, rg"));
-			return userCreatePage()
-					.addObject("field_errors", result.getAllErrors())
-					.addObject("user", user)
-					.addObject("roles", roleRepository.findAll());
+			Optional<User> u = userRepository.findById(user.getId());
+			if (!u.isPresent()) {
+				user.setId(null);
+			}
+			return user.getId() == null
+					? userCreatePage()
+							.addObject("field_errors", result.getAllErrors())
+							.addObject("user", user)
+					: userEditPage(user.getId())
+						.addObject("field_errors", result.getAllErrors())
+						.addObject("user", user);
 		}
 	}
 	
